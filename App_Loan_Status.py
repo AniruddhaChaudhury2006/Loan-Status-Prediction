@@ -6,7 +6,7 @@ from sklearn import svm
 from sklearn.metrics import accuracy_score
 import streamlit as st
 st.title("🏦 Loan Status Prediction System")
-loan_dataset = pd.read_csv('/content/loan.csv')
+loan_dataset = pd.read_csv('loan.csv')
 loan_dataset=loan_dataset.dropna()
 loan_dataset.replace({'Loan_Status':{'N':0,'Y':1}},inplace=True)
 loan_dataset=loan_dataset.replace(to_replace='3+',value=4)
