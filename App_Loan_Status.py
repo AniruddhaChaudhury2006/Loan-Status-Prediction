@@ -99,7 +99,7 @@ st.markdown('---')
 st.header("🤖 AI Decision Explanation")
 if st.button("Explain Prediction"):
     feature_names = ["Gender","Married","Dependents","Education","Self_Employed","ApplicantIncome","CoapplicantIncome","LoanAmount","Loan_Amount_Term","Credit_History","Property_Area"]
-    explanation_df = pd.DataFrame({"Feature": feature_names, "Applicant Value": input_data[0]})
+    explanation_df = pd.DataFrame({"Feature": feature_names, "Applicant Value": input_data.iloc[0]})
     st.write("### Applicant Feature Summary")
     st.dataframe(explanation_df)
     st.info("""
