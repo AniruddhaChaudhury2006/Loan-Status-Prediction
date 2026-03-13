@@ -23,17 +23,31 @@ test_data_accuracy = accuracy_score(X_test_prediction,Y_test)
 st.sidebar.write("Accuracy on training data = ", training_data_accuracy)
 st.sidebar.write("Accuracy on test data = ", test_data_accuracy)
 st.header("Enter Applicant Details")
-Gender = st.selectbox("Gender", [0,1])
-Married = st.selectbox("Married", [0,1])
-Dependents = st.number_input("Dependents",0,4)
-Education = st.selectbox("Education (0=Not Graduate,1=Graduate)",[0,1])
-Self_Employed = st.selectbox("Self Employed",[0,1])
-ApplicantIncome = st.number_input("Applicant Income")
-CoapplicantIncome = st.number_input("Coapplicant Income")
-LoanAmount = st.number_input("Loan Amount")
-Loan_Amount_Term = st.number_input("Loan Term")
-Credit_History = st.selectbox("Credit History",[0,1])
-Property_Area = st.selectbox("Property Area (0=Rural,1=Semiurban,2=Urban)",[0,1,2])
+col1, col2 = st.columns(2)
+with col1:
+    Gender = st.selectbox("Gender", ["Male", "Female"])
+    Gender == 1 if Gender == 'Male' else 0
+    Married = st.selectbox("Married", ["Yes","No"])
+    Married = 1 if Married == "Yes" else 0
+    Dependents = st.number_input("Dependents",0,4)
+    Education = st.selectbox("Education", ["Graduate", "Not graduate"])
+    Education = 1 if Education == "Graduate" else 0
+    Self_Employed = st.selectbox("Self Employed",["Yes","No"])
+    Self_Employed = 1 if Self_Employed == "Yes" else 0
+with col2:
+    ApplicantIncome = st.number_input("Applicant Income")
+    CoapplicantIncome = st.number_input("Coapplicant Income")
+    LoanAmount = st.number_input("Loan Amount")
+    Loan_Amount_Term = st.number_input("Loan Term")
+    Credit_History = st.selectbox("Credit History",["Yes","No"])
+    Credit_History = 1 if Credit_History == "Yes" else 0
+    Property_Area = st.selectbox("Property Area", ["Rural", "Semiurban", "Urban"])
+    if Property_Area == "Rural":
+        Property_Area = 0
+    elif Property_Area == "Semiurban":
+        Property_Area = 1
+    else:
+        Property_Area = 2
 input_data = np.array([[Gender,Married,Dependents,Education,Self_Employed,
 ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,
 Credit_History,Property_Area]])
@@ -43,3 +57,5 @@ if st.button("Predict Loan Status"):
         st.success("✅ Loan Approved")
     else:
         st.error("❌ Loan Rejected")
+probability = classifier.decision_function(input_data)
+st.write("Confidence score: ", probability)
