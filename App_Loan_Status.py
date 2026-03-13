@@ -57,7 +57,7 @@ with col2:
         Property_Area = 1
     else:
         Property_Area = 2
-input_data = np.array([[Gender,Married,Dependents,Education,Self_Employed,ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,Credit_History,Property_Area]])
+input_data = pd.DataFrame([[Gender,Married,Dependents,Education,Self_Employed,ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,Credit_History,Property_Area]], columns=X.columns)
 if st.button("Predict Loan Status"):
     prediction = classifier.predict(input_data)
     if prediction[0] == 1:
