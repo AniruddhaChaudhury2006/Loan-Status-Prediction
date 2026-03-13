@@ -26,7 +26,7 @@ st.header("Enter Applicant Details")
 col1, col2 = st.columns(2)
 with col1:
     Gender = st.selectbox("Gender", ["Male", "Female"])
-    Gender == 1 if Gender == 'Male' else 0
+    Gender = 1 if Gender == 'Male' else 0
     Married = st.selectbox("Married", ["Yes","No"])
     Married = 1 if Married == "Yes" else 0
     Dependents = st.number_input("Dependents",0,4)
