@@ -31,8 +31,6 @@ X_train_prediction = classifier.predict(X_train)
 training_data_accuracy = accuracy_score(X_train_prediction,Y_train)
 X_test_prediction = classifier.predict(X_test)
 test_data_accuracy = accuracy_score(X_test_prediction,Y_test)
-st.sidebar.write("Accuracy on training data = ", training_data_accuracy)
-st.sidebar.write("Accuracy on test data = ", test_data_accuracy)
 st.header("Enter Applicant Details")
 col1, col2 = st.columns(2)
 with col1:
@@ -66,8 +64,6 @@ if st.button("Predict Loan Status"):
         st.success("✅ Loan Approved")
     else:
         st.error("❌ Loan Rejected")
-prob_classifier = svm.SVC(kernel = "linear", probability = True)
-prob_classifier.fit(X_train, Y_train)
 if st.button("Show Approval Probability"):
     probability = prob_classifier.predict_proba(input_data)
     approval_prob = probability[0][1]
@@ -83,18 +79,22 @@ if analysis_option == "Loan Status Distribution":
     fig, ax = plt.subplots()
     sns.countplot(x = 'Loan_Status', data = loan_dataset, ax = ax)
     st.pyplot(fig)
+    plt.close(fig)
 elif analysis_option == "Applicant Income Distribution":
     fig, ax = plt.subplots()
     sns.histplot(loan_dataset['ApplicantIncome'], bins = 30, kde = True, ax = ax)
     st.pyplot(fig)
+    plt.close(fig)
 elif analysis_option == "Loan Amount Distribution":
     fig, ax = plt.subplots()
     sns.histplot(loan_dataset['LoanAmount'], bins = 30, kde = True, ax = ax)
     st.pyplot(fig)
+    plt.close(fig)
 else:
     fig, ax = plt.subplots()
     sns.countplot(x = 'Property_Area', hue = 'Loan_Status', data = loan_dataset, ax = ax)
     st.pyplot(fig)
+    plt.close(fig)
 st.markdown('---')
 st.header("🤖 AI Decision Explanation")
 if st.button("Explain Prediction"):
@@ -138,5 +138,6 @@ st.subheader("📊 Income vs Loan Amount")
 fig, ax = plt.subplots()
 sns.scatterplot(x="ApplicantIncome",y="LoanAmount",hue="Loan_Status",data=loan_dataset,ax=ax)
 st.pyplot(fig)    
+plt.close(fig)
 
 
