@@ -31,7 +31,7 @@ with col1:
     Married = st.selectbox("Married", ["Yes","No"])
     Married = 1 if Married == "Yes" else 0
     Dependents = st.number_input("Dependents",0,4)
-    Education = st.selectbox("Education", ["Graduate", "Not graduate"])
+    Education = st.selectbox("Education", ["Graduate", "Not Graduate"])
     Education = 1 if Education == "Graduate" else 0
     Self_Employed = st.selectbox("Self Employed",["Yes","No"])
     Self_Employed = 1 if Self_Employed == "Yes" else 0
@@ -49,9 +49,7 @@ with col2:
         Property_Area = 1
     else:
         Property_Area = 2
-input_data = np.array([[Gender,Married,Dependents,Education,Self_Employed,
-ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,
-Credit_History,Property_Area]])
+input_data = np.array([[Gender,Married,Dependents,Education,Self_Employed,ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,Credit_History,Property_Area]])
 if st.button("Predict Loan Status"):
     prediction = classifier.predict(input_data)
     if prediction[0] == 1:
@@ -87,7 +85,48 @@ else:
     fig, ax = plt.subplots()
     sns.countplot(x = 'Property_Area', hue = 'Loan_Status', data = loan_dataset, ax = ax)
     st.pyplot(fig)
+st.markdown('---')
+st.header("🤖 AI Decision Explanation")
+if st.button("Explain Prediction"):
+    feature_names = ["Gender","Married","Dependents","Education","Self_Employed","ApplicantIncome","CoapplicantIncome","LoanAmount","Loan_Amount_Term","Credit_History","Property_Area"]
+    explanation_df = pd.DataFrame({"Feature": feature_names, "Applicant Value": input_data[0]})
+    st.write("### Applicant Feature Summary")
+    st.dataframe(explanation_df)
+    st.info("""
+    AI Explanation:
+    The model mainly evaluates **Credit History, Income, Loan Amount,
+    and Property Area** to determine loan approval probability.
+    Higher income, good credit history, and reasonable loan amount
+    increase approval chances.
+    """)
+st.markdown("---")
+st.header("📉 Real-Time Loan Risk Score")
+if st.button("Calculate Risk Score"):
+    probability = prob_classifier.predict_proba(input_data)
+    approval_prob = probability[0][1]
+    risk_score = int((1 - approval_prob) * 100)
+    st.metric("Loan Risk Score: ", risk_score)
+    st.progress(risk_score)
+    if risk_score < 30:
+        st.success("Low Risk Applicant ✅")
+    elif risk_score < 60:
+        st.warning("Moderate Risk Applicant ⚠️")
+    else:
+        st.error("High Risk Applicant ❌")
+st.markdown("---")
+st.header("🏦 Bank Loan Dashboard Overview")
+total_applicants = len(loan_dataset)
+approved_loans = loan_dataset['Loan_Status'].sum()
+rejected_loans = total_applicants - approved_loans
+approval_rate = (approved_loans / total_applicants) * 100
+col1, col2, col3, col4 = st.columns(4)
+col1.metric("Total Applicants", total_applicants)
+col2.metric("Approved Loans", approved_loans)
+col3.metric("Rejected Loans", rejected_loans)
+col4.metric("Approval Rate", str(round(approval_rate,2)) + " %")
+st.subheader("📊 Income vs Loan Amount")
+fig, ax = plt.subplots()
+sns.scatterplot(x="ApplicantIncome",y="LoanAmount",hue="Loan_Status",data=loan_dataset,ax=ax)
+st.pyplot(fig)    
 
-    
-    
 
