@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.metrics import accuracy_score
@@ -57,5 +58,36 @@ if st.button("Predict Loan Status"):
         st.success("✅ Loan Approved")
     else:
         st.error("❌ Loan Rejected")
-probability = classifier.decision_function(input_data)
-st.write("Confidence score: ", probability)
+prob_classifier = svm.SVC(kernel = "linear", probability = True)
+prob_classifier.fit(X_train, Y_train)
+if st.button("Show Approval Probability"):
+    probability = prob_classifier.predict_proba(input_data)
+    approval_prob = probability[0][1]
+    rejection_prob = probability[0][0]
+    st.subheader("📊 Loan Approval Probability Meter")
+    st.progress(int(approval_prob * 100))
+    st.write("✅ Approval Probability:", round(approval_prob * 100, 2), "%")
+    st.write("❌ Rejection Probability:", round(rejection_prob * 100, 2), "%")
+st.markdown('---')
+st.header("📈 Loan Data Analytics Dashboard")
+analysis_option = st.selectbox("Select Analysis",["Loan Status Distribution", "Applicant Income Distribution","Loan Amount Distribution","Property Area vs Loan Approval"])
+if analysis_option == "Loan Status Distribution":
+    fig, ax = plt.subplots()
+    sns.countplot(x = 'Loan_Status', data = loan_dataset, ax = ax)
+    st.pyplot(fig)
+elif analysis_option == "Applicant Income Distribution":
+    fig, ax = plt.subplots()
+    sns.histplot(loan_dataset['ApplicantIncome'], bins = 30, kde = True, ax = ax)
+    st.pyplot(fig)
+elif analysis_option == "Loan Amount Distribution":
+    fig, ax = plt.subplots()
+    sns.histplot(loan_dataset['LoanAmount'], bins = 30, kde = True, ax = ax)
+    st.pyplot(fig)
+else:
+    fig, ax = plt.subplots()
+    sns.countplot(x = 'Property_Area', hue = 'Loan_Status', data = loan_dataset, ax = ax)
+    st.pyplot(fig)
+
+    
+    
+
