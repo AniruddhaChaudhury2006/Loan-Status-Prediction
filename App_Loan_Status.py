@@ -6,51 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 import streamlit as st
-plt.style.use("dark_background")
 st.set_page_config(page_title="AI Loan Approval System", page_icon="🏦", layout="wide")
-st.markdown("""
-<style>
-
-.stApp {
-background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color: white;
-}
-
-/* headings */
-h1, h2, h3, h4, h5, h6 {
-color: white !important;
-}
-
-/* normal text */
-p, div, span, label {
-color: white !important;
-}
-
-/* fix selectbox input text */
-.stSelectbox div[data-baseweb="select"] > div {
-color: black !important;
-background-color: white !important;
-}
-
-/* dropdown menu */
-ul[role="listbox"] {
-background-color: white !important;
-color: black !important;
-}
-
-/* glass card */
-.glass {
-background: rgba(255,255,255,0.08);
-border-radius:16px;
-padding:20px;
-backdrop-filter: blur(10px);
-border:1px solid rgba(255,255,255,0.15);
-box-shadow:0 8px 32px rgba(0,0,0,0.4);
-color:white;
-}
-
-</style>
-""", unsafe_allow_html=True)
 @st.cache_data
 def load_data():
     df = pd.read_csv("loan.csv")
@@ -181,7 +137,5 @@ col4.metric("Approval Rate", str(round(approval_rate,2)) + " %")
 st.subheader("📊 Income vs Loan Amount")
 fig, ax = plt.subplots()
 sns.scatterplot(x="ApplicantIncome",y="LoanAmount",hue="Loan_Status",data=loan_dataset,ax=ax)
-st.pyplot(fig)    
+st.pyplot(fig)
 plt.close(fig)
-
-
