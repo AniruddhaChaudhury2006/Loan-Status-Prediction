@@ -16,18 +16,29 @@ background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color: white;
 }
 
+/* headings */
 h1, h2, h3, h4, h5, h6 {
 color: white !important;
 }
 
-p, div, label, span {
+/* normal text */
+p, div, span, label {
 color: white !important;
 }
 
-[data-testid="stMetricValue"] {
-color: white;
+/* fix selectbox input text */
+.stSelectbox div[data-baseweb="select"] > div {
+color: black !important;
+background-color: white !important;
 }
 
+/* dropdown menu */
+ul[role="listbox"] {
+background-color: white !important;
+color: black !important;
+}
+
+/* glass card */
 .glass {
 background: rgba(255,255,255,0.08);
 border-radius:16px;
