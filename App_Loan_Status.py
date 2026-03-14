@@ -7,6 +7,19 @@ from sklearn import svm
 from sklearn.metrics import accuracy_score
 import streamlit as st
 st.set_page_config(page_title="AI Loan Approval System", page_icon="🏦", layout="wide")
+st.markdown("""
+<style>
+.stApp {background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);}
+.glass {
+background: rgba(255,255,255,0.08);
+border-radius:16px;
+padding:20px;
+backdrop-filter: blur(10px);
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:0 8px 32px rgba(0,0,0,0.4);
+}
+</style>
+""", unsafe_allow_html=True)
 @st.cache_data
 def load_data():
     df = pd.read_csv("loan.csv")
