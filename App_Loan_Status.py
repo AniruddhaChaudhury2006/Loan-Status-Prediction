@@ -6,10 +6,28 @@ from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 import streamlit as st
+plt.style.use("dark_background")
 st.set_page_config(page_title="AI Loan Approval System", page_icon="🏦", layout="wide")
 st.markdown("""
 <style>
-.stApp {background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);}
+
+.stApp {
+background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+color: white !important;
+}
+
+p, div, label, span {
+color: white !important;
+}
+
+[data-testid="stMetricValue"] {
+color: white;
+}
+
 .glass {
 background: rgba(255,255,255,0.08);
 border-radius:16px;
@@ -17,7 +35,9 @@ padding:20px;
 backdrop-filter: blur(10px);
 border:1px solid rgba(255,255,255,0.15);
 box-shadow:0 8px 32px rgba(0,0,0,0.4);
+color:white;
 }
+
 </style>
 """, unsafe_allow_html=True)
 @st.cache_data
